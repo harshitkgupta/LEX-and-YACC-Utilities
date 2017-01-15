@@ -1,0 +1,2521 @@
+Grammar
+
+    0 $accept: st_list $end
+
+    1 st_list: /* empty */
+    2        | st_list statement '\n'
+    3        | st_list error '\n'
+    4        | st_list '\n'
+
+    5 statement: expression
+    6          | IDENTIFIER '=' expression
+
+    7 expression: '(' expression ')'
+    8           | expression '*' expression
+    9           | expression '/' expression
+   10           | expression '%' expression
+   11           | expression '+' expression
+   12           | expression '-' expression
+   13           | expression '&' expression
+   14           | expression '|' expression
+   15           | '-' expression
+   16           | expression OR expression
+   17           | NOT expression
+   18           | expression AND expression
+   19           | expression LT expression
+   20           | expression GT expression
+   21           | expression LE expression
+   22           | expression GE expression
+   23           | expression EQ expression
+   24           | expression NE expression
+   25           | IDENTIFIER INCR
+   26           | INCR IDENTIFIER
+   27           | IDENTIFIER DECR
+   28           | DECR IDENTIFIER
+   29           | expression '^' expression
+   30           | SQRT '(' expression ')'
+   31           | POW '(' expression ',' expression ')'
+   32           | EXP '(' expression ')'
+   33           | LN '(' expression ')'
+   34           | LOG '(' expression ')'
+   35           | ABS '(' expression ')'
+   36           | FACT '(' expression ')'
+   37           | SIN '(' expression ')'
+   38           | COS '(' expression ')'
+   39           | TAN '(' expression ')'
+   40           | expression NPR expression
+   41           | expression NCR expression
+   42           | IDENTIFIER
+   43           | NUMBER
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 2 3 4
+'%' (37) 10
+'&' (38) 13
+'(' (40) 7 30 31 32 33 34 35 36 37 38 39
+')' (41) 7 30 31 32 33 34 35 36 37 38 39
+'*' (42) 8
+'+' (43) 11
+',' (44) 31
+'-' (45) 12 15
+'/' (47) 9
+'=' (61) 6
+'^' (94) 29
+'|' (124) 14
+error (256) 3
+IDENTIFIER (258) 6 25 26 27 28 42
+NUMBER (259) 43
+INCR (260) 25 26
+DECR (261) 27 28
+AND (262) 18
+OR (263) 16
+LT (264) 19
+GT (265) 20
+LE (266) 21
+GE (267) 22
+EQ (268) 23
+NE (269) 24
+SQRT (270) 30
+POW (271) 31
+EXP (272) 32
+LN (273) 33
+LOG (274) 34
+SIN (275) 37
+COS (276) 38
+TAN (277) 39
+NPR (278) 40
+NCR (279) 41
+ABS (280) 35
+FACT (281) 36
+NOT (282) 17
+UMINUS (283)
+
+
+Nonterminals, with rules where they appear
+
+$accept (42)
+    on left: 0
+st_list (43)
+    on left: 1 2 3 4, on right: 0 2 3 4
+statement (44)
+    on left: 5 6, on right: 2
+expression (45)
+    on left: 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+    26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43, on right:
+    5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 29 30 31
+    32 33 34 35 36 37 38 39 40 41
+
+
+state 0
+
+    0 $accept: . st_list $end
+
+    $default  reduce using rule 1 (st_list)
+
+    st_list  go to state 1
+
+
+state 1
+
+    0 $accept: st_list . $end
+    2 st_list: st_list . statement '\n'
+    3        | st_list . error '\n'
+    4        | st_list . '\n'
+
+    $end        shift, and go to state 2
+    error       shift, and go to state 3
+    IDENTIFIER  shift, and go to state 4
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '\n'        shift, and go to state 20
+    '('         shift, and go to state 21
+
+    statement   go to state 22
+    expression  go to state 23
+
+
+state 2
+
+    0 $accept: st_list $end .
+
+    $default  accept
+
+
+state 3
+
+    3 st_list: st_list error . '\n'
+
+    '\n'  shift, and go to state 24
+
+
+state 4
+
+    6 statement: IDENTIFIER . '=' expression
+   25 expression: IDENTIFIER . INCR
+   27           | IDENTIFIER . DECR
+   42           | IDENTIFIER .
+
+    INCR  shift, and go to state 25
+    DECR  shift, and go to state 26
+    '='   shift, and go to state 27
+
+    $default  reduce using rule 42 (expression)
+
+
+state 5
+
+   43 expression: NUMBER .
+
+    $default  reduce using rule 43 (expression)
+
+
+state 6
+
+   26 expression: INCR . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 28
+
+
+state 7
+
+   28 expression: DECR . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 29
+
+
+state 8
+
+   30 expression: SQRT . '(' expression ')'
+
+    '('  shift, and go to state 30
+
+
+state 9
+
+   31 expression: POW . '(' expression ',' expression ')'
+
+    '('  shift, and go to state 31
+
+
+state 10
+
+   32 expression: EXP . '(' expression ')'
+
+    '('  shift, and go to state 32
+
+
+state 11
+
+   33 expression: LN . '(' expression ')'
+
+    '('  shift, and go to state 33
+
+
+state 12
+
+   34 expression: LOG . '(' expression ')'
+
+    '('  shift, and go to state 34
+
+
+state 13
+
+   37 expression: SIN . '(' expression ')'
+
+    '('  shift, and go to state 35
+
+
+state 14
+
+   38 expression: COS . '(' expression ')'
+
+    '('  shift, and go to state 36
+
+
+state 15
+
+   39 expression: TAN . '(' expression ')'
+
+    '('  shift, and go to state 37
+
+
+state 16
+
+   35 expression: ABS . '(' expression ')'
+
+    '('  shift, and go to state 38
+
+
+state 17
+
+   36 expression: FACT . '(' expression ')'
+
+    '('  shift, and go to state 39
+
+
+state 18
+
+   17 expression: NOT . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 41
+
+
+state 19
+
+   15 expression: '-' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 42
+
+
+state 20
+
+    4 st_list: st_list '\n' .
+
+    $default  reduce using rule 4 (st_list)
+
+
+state 21
+
+    7 expression: '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 43
+
+
+state 22
+
+    2 st_list: st_list statement . '\n'
+
+    '\n'  shift, and go to state 44
+
+
+state 23
+
+    5 statement: expression .
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 5 (statement)
+
+
+state 24
+
+    3 st_list: st_list error '\n' .
+
+    $default  reduce using rule 3 (st_list)
+
+
+state 25
+
+   25 expression: IDENTIFIER INCR .
+
+    $default  reduce using rule 25 (expression)
+
+
+state 26
+
+   27 expression: IDENTIFIER DECR .
+
+    $default  reduce using rule 27 (expression)
+
+
+state 27
+
+    6 statement: IDENTIFIER '=' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 63
+
+
+state 28
+
+   26 expression: INCR IDENTIFIER .
+
+    $default  reduce using rule 26 (expression)
+
+
+state 29
+
+   28 expression: DECR IDENTIFIER .
+
+    $default  reduce using rule 28 (expression)
+
+
+state 30
+
+   30 expression: SQRT '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 64
+
+
+state 31
+
+   31 expression: POW '(' . expression ',' expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 65
+
+
+state 32
+
+   32 expression: EXP '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 66
+
+
+state 33
+
+   33 expression: LN '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 67
+
+
+state 34
+
+   34 expression: LOG '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 68
+
+
+state 35
+
+   37 expression: SIN '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 69
+
+
+state 36
+
+   38 expression: COS '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 70
+
+
+state 37
+
+   39 expression: TAN '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 71
+
+
+state 38
+
+   35 expression: ABS '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 72
+
+
+state 39
+
+   36 expression: FACT '(' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 73
+
+
+state 40
+
+   25 expression: IDENTIFIER . INCR
+   27           | IDENTIFIER . DECR
+   42           | IDENTIFIER .
+
+    INCR  shift, and go to state 25
+    DECR  shift, and go to state 26
+
+    $default  reduce using rule 42 (expression)
+
+
+state 41
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   17           | NOT expression .
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 17 (expression)
+
+
+state 42
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   15           | '-' expression .
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+
+    $default  reduce using rule 15 (expression)
+
+
+state 43
+
+    7 expression: '(' expression . ')'
+    8           | expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 74
+
+
+state 44
+
+    2 st_list: st_list statement '\n' .
+
+    $default  reduce using rule 2 (st_list)
+
+
+state 45
+
+   18 expression: expression AND . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 75
+
+
+state 46
+
+   16 expression: expression OR . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 76
+
+
+state 47
+
+   19 expression: expression LT . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 77
+
+
+state 48
+
+   20 expression: expression GT . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 78
+
+
+state 49
+
+   21 expression: expression LE . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 79
+
+
+state 50
+
+   22 expression: expression GE . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 80
+
+
+state 51
+
+   23 expression: expression EQ . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 81
+
+
+state 52
+
+   24 expression: expression NE . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 82
+
+
+state 53
+
+   40 expression: expression NPR . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 83
+
+
+state 54
+
+   41 expression: expression NCR . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 84
+
+
+state 55
+
+   14 expression: expression '|' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 85
+
+
+state 56
+
+   13 expression: expression '&' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 86
+
+
+state 57
+
+   11 expression: expression '+' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 87
+
+
+state 58
+
+   12 expression: expression '-' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 88
+
+
+state 59
+
+    8 expression: expression '*' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 89
+
+
+state 60
+
+    9 expression: expression '/' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 90
+
+
+state 61
+
+   10 expression: expression '%' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 91
+
+
+state 62
+
+   29 expression: expression '^' . expression
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 92
+
+
+state 63
+
+    6 statement: IDENTIFIER '=' expression .
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 6 (statement)
+
+
+state 64
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   30           | SQRT '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 93
+
+
+state 65
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   31           | POW '(' expression . ',' expression ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ','  shift, and go to state 94
+
+
+state 66
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   32           | EXP '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 95
+
+
+state 67
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   33           | LN '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 96
+
+
+state 68
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   34           | LOG '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 97
+
+
+state 69
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   37           | SIN '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 98
+
+
+state 70
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   38           | COS '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 99
+
+
+state 71
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   39           | TAN '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 100
+
+
+state 72
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   35           | ABS '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 101
+
+
+state 73
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   36           | FACT '(' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 102
+
+
+state 74
+
+    7 expression: '(' expression ')' .
+
+    $default  reduce using rule 7 (expression)
+
+
+state 75
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   18           | expression AND expression .
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 18 (expression)
+
+
+state 76
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   16           | expression OR expression .
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 16 (expression)
+
+
+state 77
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   19           | expression LT expression .
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 19 (expression)
+
+
+state 78
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   20           | expression GT expression .
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 20 (expression)
+
+
+state 79
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   21           | expression LE expression .
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 21 (expression)
+
+
+state 80
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   22           | expression GE expression .
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 22 (expression)
+
+
+state 81
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   23           | expression EQ expression .
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 23 (expression)
+
+
+state 82
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   24           | expression NE expression .
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 24 (expression)
+
+
+state 83
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   40           | expression NPR expression .
+   41           | expression . NCR expression
+
+    $default  reduce using rule 40 (expression)
+
+
+state 84
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+   41           | expression NCR expression .
+
+    $default  reduce using rule 41 (expression)
+
+
+state 85
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   14           | expression '|' expression .
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 14 (expression)
+
+
+state 86
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   13           | expression '&' expression .
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 13 (expression)
+
+
+state 87
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   11           | expression '+' expression .
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 11 (expression)
+
+
+state 88
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   12           | expression '-' expression .
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 12 (expression)
+
+
+state 89
+
+    8 expression: expression . '*' expression
+    8           | expression '*' expression .
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 8 (expression)
+
+
+state 90
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+    9           | expression '/' expression .
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 9 (expression)
+
+
+state 91
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   10           | expression '%' expression .
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 10 (expression)
+
+
+state 92
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   29           | expression '^' expression .
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '^'  shift, and go to state 62
+
+    $default  reduce using rule 29 (expression)
+
+
+state 93
+
+   30 expression: SQRT '(' expression ')' .
+
+    $default  reduce using rule 30 (expression)
+
+
+state 94
+
+   31 expression: POW '(' expression ',' . expression ')'
+
+    IDENTIFIER  shift, and go to state 40
+    NUMBER      shift, and go to state 5
+    INCR        shift, and go to state 6
+    DECR        shift, and go to state 7
+    SQRT        shift, and go to state 8
+    POW         shift, and go to state 9
+    EXP         shift, and go to state 10
+    LN          shift, and go to state 11
+    LOG         shift, and go to state 12
+    SIN         shift, and go to state 13
+    COS         shift, and go to state 14
+    TAN         shift, and go to state 15
+    ABS         shift, and go to state 16
+    FACT        shift, and go to state 17
+    NOT         shift, and go to state 18
+    '-'         shift, and go to state 19
+    '('         shift, and go to state 21
+
+    expression  go to state 103
+
+
+state 95
+
+   32 expression: EXP '(' expression ')' .
+
+    $default  reduce using rule 32 (expression)
+
+
+state 96
+
+   33 expression: LN '(' expression ')' .
+
+    $default  reduce using rule 33 (expression)
+
+
+state 97
+
+   34 expression: LOG '(' expression ')' .
+
+    $default  reduce using rule 34 (expression)
+
+
+state 98
+
+   37 expression: SIN '(' expression ')' .
+
+    $default  reduce using rule 37 (expression)
+
+
+state 99
+
+   38 expression: COS '(' expression ')' .
+
+    $default  reduce using rule 38 (expression)
+
+
+state 100
+
+   39 expression: TAN '(' expression ')' .
+
+    $default  reduce using rule 39 (expression)
+
+
+state 101
+
+   35 expression: ABS '(' expression ')' .
+
+    $default  reduce using rule 35 (expression)
+
+
+state 102
+
+   36 expression: FACT '(' expression ')' .
+
+    $default  reduce using rule 36 (expression)
+
+
+state 103
+
+    8 expression: expression . '*' expression
+    9           | expression . '/' expression
+   10           | expression . '%' expression
+   11           | expression . '+' expression
+   12           | expression . '-' expression
+   13           | expression . '&' expression
+   14           | expression . '|' expression
+   16           | expression . OR expression
+   18           | expression . AND expression
+   19           | expression . LT expression
+   20           | expression . GT expression
+   21           | expression . LE expression
+   22           | expression . GE expression
+   23           | expression . EQ expression
+   24           | expression . NE expression
+   29           | expression . '^' expression
+   31           | POW '(' expression ',' expression . ')'
+   40           | expression . NPR expression
+   41           | expression . NCR expression
+
+    AND  shift, and go to state 45
+    OR   shift, and go to state 46
+    LT   shift, and go to state 47
+    GT   shift, and go to state 48
+    LE   shift, and go to state 49
+    GE   shift, and go to state 50
+    EQ   shift, and go to state 51
+    NE   shift, and go to state 52
+    NPR  shift, and go to state 53
+    NCR  shift, and go to state 54
+    '|'  shift, and go to state 55
+    '&'  shift, and go to state 56
+    '+'  shift, and go to state 57
+    '-'  shift, and go to state 58
+    '*'  shift, and go to state 59
+    '/'  shift, and go to state 60
+    '%'  shift, and go to state 61
+    '^'  shift, and go to state 62
+    ')'  shift, and go to state 104
+
+
+state 104
+
+   31 expression: POW '(' expression ',' expression ')' .
+
+    $default  reduce using rule 31 (expression)
